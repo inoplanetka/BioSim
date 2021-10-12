@@ -1,0 +1,144 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Method &#8212; Modelling the Ecosystem of Rossumøya  documentation</title>
+    <link rel="stylesheet" href="_static/graphite.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Results" href="results.html" />
+    <link rel="prev" title="Background" href="background.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="results.html" title="Results"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="background.html" title="Background"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Modelling the Ecosystem of Rossumøya  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="method">
+<h1>Method<a class="headerlink" href="#method" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>Materials used in the project:</strong></p>
+<p>Macbook with macOS High Sierra version 10.13.6 , PyCharm Professional 2019.2.3 (Professional Edition), licensed to Ivan Cherednikov, GitKraken version 6.4.1, GitHub.</p>
+<p><strong>Execution of the project:</strong></p>
+<p>It was decided that there is need of use of superclasses and subclasses. The animals file lays the foundation for the project, with other functions depending on the ones from animals.py. Therefore, it was written first. A superclass “Animal” was created, containing all the functions that could be applied to both herbivores and carnivores. The species bound parameters were stored in the “Herbivore” and “Carnivore” class. The herbivore subclass only had the species bound parameters and a “super() “function. Usage of inheritance and superclasses greatly reduces the amount of code needed to be written in the project. The carnivore subclass included the species parameters, a “super()” function and a “kill_carnivore” function. Since herbivores do not hunt, the function did not need to be in the Animal superclass. It is also worth noting that the default parameters from the assignment paper were used.</p>
+<p>Many of the functions in the animals.py file are simple, just plugging in the formulas and using right parameter names, or even just adding a 1, like in the age function. However, as already noted, together it build the much needed foundation for the rest of the code.</p>
+<p>The calculation of fitness was split up into two, a class method and a static method. The static method behaves like a function and no object istance is passed as the first argument. In the class method the class of the istance is then passed as the first argument, with the class method finishing the fitness calculation. Fitness is recounted after yearly weight loss, weight loss at reproduction and after eating.</p>
+<p>The calculation of the weight at birth of an animal was a simple, yet interesting class method. Since the project worker has not worked with numpy random destribution, it was a hassle figuring it out at first. But it was, in fact as simple as using numpy’s “random.normal” normal distribution, putting in the values for the mean and standard deviation.</p>
+<p>Moving on the the landscape file, a superclass Square was created. The class represents a single cell on the island. All types of cells are subclasses to it, including impassable ones, Ocean and Mountain. The constructor includes two empty dictionaries, one that is later filled with animals of both species in a cell and the other one with migrants, used in the migration functions.</p>
+<p>The landscape file was built with the help of functions written in the animals.py file. Abundance is calculated in a similar way to formula_fitness in animals.py, using a static method with a simple return. However, propensity differs from the fitness calculation as it is a harder process requiring the use of numpy and multiple local variables.</p>
+<p>The migration process was by far the biggest challenge of the project, with constant problems arising in the process. It seems, however, that using multiple “for” loops combined with “if” tests and a “while” loop, together with numpy works wonders. The migration process was split up into two functions, one for addding them to “migrants” or keeping them in the cell if they do not move and the other one for adding them to the cell.</p>
+<p>The subclasses contain constructors with super() functions, fodder growth functions for Jungle and Savannah, and propensity calculation function that return a 0 for the impassable landscape types, Ocean and Mountain.</p>
+<p>Simple, yet crucial for the simulation code was further written in the landscape.py file. Yearly weight loss for animals in a cell and aging of animals in a cell. Furthermore, code for feeding both the carnivores and the herbivores was written. For herbivores, it was a simpler combination of a “for” loop and “if” and “elif” testing. If the herbivore ate all the food available in the cell, the cell’s fodder supply was set to 0. For carnivores, however, it was a harder process. This part was assissted by the TA’s, helping the student with the function. The herbivores that are not eaten in the carnivore hunting process are added to the “kill_failed” list, they are the survivors. After the carnivore tries to hunt, the surviving animals are placed back in the cell. If a herbivore gets killed and it’s weight is more that carnivore’s hunger (how much the carnivore has eaten), the rest of the herbivore’s food goes to waste, which means no food is stored.</p>
+<p>Thereafter, a function was made that simply calls on food growth, carnivores and herbivores feeding. It was done to make the code more compact and to not have to call on all three functions in the yearly cycle function, later on in the project.</p>
+<p>The island file combined all the previous code to get the island running. The island map construction was introduced to build the cells of the island. Since an animal that is in a cell can only move the one of four neighboring cells which are non diagonal, a function for getting the adjacent cells was written. Further, a function for adding initial animal population was done with the help of calling functions and code written previously.</p>
+<p>In the end, simple functions calling the ones from previous files were done, to initialize the yearly cycle. The yearly cycle, as stated before, is feeding, procreation, migrations, aging, loss of weight and death. It is, however, important to note that the growth of food in savannahs and jungles occured before feeding, as a step 0. That is why the growth function is included in “feed_everyone()”.</p>
+<p>Moving on to the simulation file, which has yet not been fully developed. The three functions for animal distribution on the island were done, “animal_distibution”, “num_animals_per_species” and “num_animals” with each returning the amount of animals, whether it is per species or a total amount, A pandas dataframe is used in the first function and is then passed on to the other two.</p>
+<p>The “simulate” function checks if the simulation should still be running, by checking if the year has not passed the maximum amount of years and if any animals are still alive. If that is not the case, the simulation stops. Else, the yearly cycle is started again and a year passed in the simulation.</p>
+<p>It should be noted a very small amounts of tests has been done, as they were left for last. That, I apologize for, since I know that it is a great percentage of the grade.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><a class="reference internal" href="index.html#mastertoc"><span class="std std-ref">Return Home</span></a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/rossum.png" alt="Logo"/>
+            </a></p><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1561.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 14.0px Times; text-decoration: underline ; font-kerning: none; color: #0000ee; -webkit-text-stroke: 0px #0000ee}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"></span></p>
+<h3 style="margin: 0.0px 0.0px 14.0px 0.0px; line-height: 17.0px; font: 12.0px Menlo; color: #0432ff"><span class="s2"><a href="file:///Users/IvanCherednikov/Desktop/documentation%20project/_templates/%7B%7B%20pathto(master_doc)%20%7D%7D"><b></b></a></span>Modelling the Ecosystem of Rossumøya<a href="file:///Users/IvanCherednikov/Desktop/documentation%20project/_templates/%7B%7B%20pathto(master_doc)%20%7D%7D"><span class="s2"><b></b></span></a></h3>
+<p class="p1"><span class="s1"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="abstract.html">Abstract</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="background.html">Background</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discussion.html">Discussion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sources.html">Sources</a></li>
+</ul>
+<span class="Apple-converted-space"> </span></span></p>
+</body>
+</html>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="results.html" title="Results"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="background.html" title="Background"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Modelling the Ecosystem of Rossumøya  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Ivan Cherednikov.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>
