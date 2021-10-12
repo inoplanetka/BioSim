@@ -1,3 +1,1 @@
-# BioSim_G23_Ivan
-
-Inf200 project January 2020
+### Visualisation and documentation done with HTML and Python
