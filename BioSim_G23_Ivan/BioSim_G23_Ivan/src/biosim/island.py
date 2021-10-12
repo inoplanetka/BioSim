@@ -3,8 +3,8 @@
 """
 """
 
-__author__ = "Peter Langdalen & Ivan Cherednikov"
-__email__ = "pelangda@nmbu.no & ivch@nmbu.no"
+__author__ = "Ivan Cherednikov"
+__email__ = "ivch@nmbu.no"
 
 from src.biosim.animals import Herbivore
 from src.biosim.animals import Carnivore
